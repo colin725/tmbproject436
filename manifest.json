@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+
+  "name": "Beer linker",
+  "description": "This extension links you to beer rating pages.",
+  "version": "1.0",
+
+  "content_scripts": [
+    {
+      "matches": ["http://*/*"],
+      "js": ["getText.js"]
+    }
+  ],
+  "permissions": [
+
+  ],
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  }
+}
