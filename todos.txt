@@ -1,0 +1,1 @@
+- Look into not running the getText.js on every webpage, but inject when needed.  Not a big deal, but a best practice.
