@@ -8,18 +8,17 @@
   "content_scripts": [
     {
       "matches": ["http://*/*"],
-      "js": ["getPage.js"],
-      "run_at": "document_end",
-      "all_frames": true
+      "js": ["getPage.js"]
     }
   ],
 
   "permissions": [
     "tabs",
     "chrome://favicon/",
-    "http://www.the-mainboard.com//*",
     "http://*/*", 
-    "https://*/*"
+    "https://*/*",
+    "webNavigation",
+    "webRequest"
   ],
 
   "browser_action": {
