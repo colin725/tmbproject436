@@ -33,7 +33,7 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 
 				// Our list of beers
 				var top = [
-                                        new Beer(["Heady Topper", "heady"], "http://www.beeradvocate.com/beer/profile/27039/16814/"),
+                    new Beer(["Heady Topper", "heady"], "http://www.beeradvocate.com/beer/profile/27039/16814/"),
                     new Beer(["Pliny The Younger"], "http://www.beeradvocate.com/beer/profile/863/21690/"),
                     new Beer(["Pliny The Elder", "pliny"], "http://www.beeradvocate.com/beer/profile/863/7971/"),
                     new Beer(["Bourbon County Brand Coffee Stout", "BCBCS"], "http://www.beeradvocate.com/beer/profile/1549/57747/"),

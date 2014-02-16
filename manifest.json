@@ -12,13 +12,19 @@
     }
   ],
 
+  "background": {
+    "scripts": ["background.js"]
+  },
+
   "permissions": [
     "tabs",
+    "contextMenus",
     "chrome://favicon/",
     "http://*/*", 
     "https://*/*",
     "webNavigation",
-    "webRequest"
+    "webRequest",
+    "notifications"
   ],
 
   "browser_action": {

@@ -14,3 +14,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         sendResponse({ "htmlContent": html.textContent });
     }
 });
+
+document.addEventListener('mousedown', function(event){
+    if (event.button == 2) {
+        var selection = window.getSelection().toString().trim();
+        chrome.extension.sendMessage({
+            request: 'updateContextMenu',
+            selection: selection
+        });
+    }
+}, true);
