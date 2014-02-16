@@ -33,7 +33,7 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 
 				// Our list of beers
 				var top = [
-                    new Beer(["Heady Topper", "heady"], "http://www.beeradvocate.com/beer/profile/27039/16814/"),
+                                        new Beer(["Heady Topper", "heady"], "http://www.beeradvocate.com/beer/profile/27039/16814/"),
                     new Beer(["Pliny The Younger"], "http://www.beeradvocate.com/beer/profile/863/21690/"),
                     new Beer(["Pliny The Elder", "pliny"], "http://www.beeradvocate.com/beer/profile/863/7971/"),
                     new Beer(["Bourbon County Brand Coffee Stout", "BCBCS"], "http://www.beeradvocate.com/beer/profile/1549/57747/"),
@@ -55,7 +55,7 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                     new Beer(["Hopslam"], "http://www.beeradvocate.com/beer/profile/287/17112/"),
                     new Beer(["Rochefort 10"], "http://www.beeradvocate.com/beer/profile/207/645/"),
                     new Beer(["Hunahpu"], "http://www.beeradvocate.com/beer/profile/17981/47022/"),
-                    new Beer(["Bourbon County Brand Barleywine Ale", "BCBB"], "http://www.beeradvocate.com/beer/profile/1549/100421/"),
+                    new Beer(["Bourbon County Brand Barleywine", "BCBB", "Bourbon County Barley"], "http://www.beeradvocate.com/beer/profile/1549/100421/"),
                     new Beer(["Bourbon Barrel Aged Plead The 5th", "BBAPt5", "BBA Plead The 5th"], "http://www.beeradvocate.com/beer/profile/1471/60426/"),
                     new Beer(["Bourbon Barrel Fourth Dementia", "BB4D"], "http://www.beeradvocate.com/beer/profile/2097/34313/"),
                     new Beer(["§ucaba", "Abacus", "Sucaba"], "http://www.beeradvocate.com/beer/profile/2210/41121/"),
@@ -113,7 +113,7 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                     new Beer(["Exponential Hoppiness"], "http://www.beeradvocate.com/beer/profile/3120/12068/"),
                     new Beer(["Bad Boy"], "http://www.beeradvocate.com/beer/profile/3120/34090/"),
                     new Beer(["Lagunitas Sucks"], "http://www.beeradvocate.com/beer/profile/220/74986/"),
-                    new Beer(["Matt "], "http://www.beeradvocate.com/beer/profile/173/47546/"),
+                    new Beer(["Matt"], "http://www.beeradvocate.com/beer/profile/173/47546/"),
                     new Beer(["Solitude #4", "Solitude 4"], "http://www.beeradvocate.com/beer/profile/22511/83008/"),
                     new Beer(["FIDY"], "http://www.beeradvocate.com/beer/profile/28907/34483/"),
                     new Beer(["Nugget Nectar"], "http://www.beeradvocate.com/beer/profile/694/15881/"),
@@ -265,7 +265,7 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                     new Beer(["Weihenstephaner Vitus"], "http://www.beeradvocate.com/beer/profile/252/35625/"),
                     new Beer(["Weihenstephaner Hefeweissbier Dunkel"], "http://www.beeradvocate.com/beer/profile/252/808/"),
                     new Beer(["Oude Tart"], "http://www.beeradvocate.com/beer/profile/16866/54888/"),
-                    new Beer([" MO "], "http://www.beeradvocate.com/beer/profile/20681/78906/"),
+                    new Beer(["MO"], "http://www.beeradvocate.com/beer/profile/20681/78906/"),
                     new Beer(["Chillwave"], "http://www.beeradvocate.com/beer/profile/73/90156/"),
                     new Beer(["Girardin Gueuze"], "http://www.beeradvocate.com/beer/profile/2541/6317/"),
                     new Beer(["Simtra"], "http://www.beeradvocate.com/beer/profile/23200/78377/"),
@@ -275,66 +275,163 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                     new Beer(["Farmer's Reserve #3", "Farmer's Reserve 3"], "http://www.beeradvocate.com/beer/profile/24940/94425/"),
                     new Beer(["Tartare"], "http://www.beeradvocate.com/beer/profile/610/75491/"),
                     new Beer(["Czar Jack"], "http://www.beeradvocate.com/beer/profile/1177/20578/"),
-                    new Beer(["Bligh's Barleywine Ale", "Blighs Barleywine Ale"], "http://www.beeradvocate.com/beer/profile/12314/73910/"),
+                    new Beer(["Bligh's Barleywine", "Blighs Barleywine"], "http://www.beeradvocate.com/beer/profile/12314/73910/"),
                     new Beer(["Citra Pale Ale"], "http://www.beeradvocate.com/beer/profile/22511/59672/"),
                     new Beer(["Tweak"], "http://www.beeradvocate.com/beer/profile/30/56199/"),
                     new Beer(["Notorious"], "http://www.beeradvocate.com/beer/profile/23066/70013/"),
                     new Beer(["stone IPA"], "http://www.beeradvocate.com/beer/profile/147/88/"),
-                    new Beer(["Hop Rod Rye"], "http://www.beeradvocate.com/beer/profile/610/3158/"),
+                    new Beer(["Hop Rod"], "http://www.beeradvocate.com/beer/profile/610/3158/"),
                     new Beer(["Wookey Jack"], "http://www.beeradvocate.com/beer/profile/2210/79286/"),
-                    new Beer(["Arctic Panzer Wolf"], "http://www.beeradvocate.com/beer/profile/26/52531/")
+                    new Beer(["Arctic Panzer"], "http://www.beeradvocate.com/beer/profile/26/52531/")
 				];
 
                 /***
-                * Code to find beers in the page and add them to our popup
+                * Update our beer list by fetching the actual list
                 */
 
-				// takes in a beer, checks if it is found, adds it to the table
-				function findBeer(beer, i) {
-					for (var j = 0; j < beer.arrayNames.length; j++) {
+                // send a request to get the top 250 page
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", "http://www.beeradvocate.com/lists/top/", true);
+                xhr.onreadystatechange = function(){
+                    if (xhr.readyState == 4) {
 
-                        // Check if our webpage text contains the beer name
-						if(~response.htmlContent.toLowerCase().indexOf(beer.arrayNames[j].toLowerCase())) {
-													console.log("Found " + (i + 1) + ": " + beer.arrayNames[j]);
+                        // execute when the request returns
+                        if(xhr.status == 200) {
 
-                            // code executed if it is found.  Create a beer link and add it to our list.
-							var bl = document.getElementById('beerList');
-							var beertext = document.createTextNode("(" + (i + 1) + ") " + beer.arrayNames[j]);
-							var link = document.createElement('li');
-                            var entry = document.createElement('a');
-							entry.appendChild(beertext);
-                            entry.setAttribute("href", beer.baLink);
-                            link.appendChild(entry);
-							bl.appendChild(link);
-							return;
-						}
-					}
-				}
+                            // execute if the page fetch was successful
+                            var string = this.responseText;
+                            var notDone = true;
+                            var count = 0;
+                            var beerlinklist = new Array();
 
-				// Go through the list and call the above function to check if it is in the webpage
-				for (var i = 0; i < top.length; i++) {
-					findBeer(top[i], i);
-				}
+                            while (notDone) {
+                                var index = string.indexOf("/beer/profile/");
+                                if (index == -1) {
+                                    // we're done
+                                    notDone = false;
+                                } else {
 
-                /***
-                * Code to make our links works
-                */
+                                    // find out the length of the link to judge if we want it
+                                    var end = index;
+                                    for (var i = 0; i < 4; i++) {
+                                        end = string.indexOf("/", end + 1);
+                                    }
 
-                // get all links
-                var hrefs = document.getElementsByTagName("a");
+                                    if (end - index < 27) {
+                                        // found an actual beer link, add it to the list
 
-                // function to call when clicked
-                function openLink() {
-                    var href = this.href;
-                    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-                        chrome.tabs.create({ url: href });
-                    });
+                                        // grab the name in case it's a beer not in our list
+                                        var name = string.substring(end + 6, string.indexOf("<", end + 7));
+
+                                        beerlinklist[count] = new Beer([name], "http://www.beeradvocate.com" + string.substring(index, end + 1));
+                                        count++;
+                                    }
+                                    string = string.substring(index + 28, string.length);
+                                }
+                            }
+
+                            // use our list to create the final top 250 list
+                            var new250 = new Array();
+                            count = 0;
+                            for (var i = 0; i < beerlinklist.length; i++) {
+                                var found = -1;
+                                for (var j = 0; j < top.length; j++) {
+                                    if (top[j].baLink == beerlinklist[i].baLink) {
+                                        // match to our manual list, use the old beer function
+                                        new250[count] = top[j];
+                                        found = j;
+                                    }
+                                }
+                                if (found > -1) {
+                                    // Already added the beer to the list, do nothing
+                                    // console.log("match: " + top[found].arrayNames[0]);
+                                } else {
+                                    console.log("beer missing match: " + beerlinklist[i].arrayNames[0]);
+                                    new250[count] = beerlinklist[i];
+                                }
+                                count++;
+                            }
+                            // swap the lists
+                            top = new250;
+                        }
+
+                        // execute further code regardless of the fetch status
+                        
+                        /***
+                        * Code to find beers in the page and add them to our popup
+                        */
+
+                        // inner function for findBeer is split out so that it can be recursively called in the skip case
+                        function findBeerInnerFunction(beer, i, j, skip) {
+                            // Check if our webpage text contains the beer name
+                            var indexFound = response.htmlContent.toLowerCase().indexOf(beer.arrayNames[j].toLowerCase(), skip)
+                            if(~indexFound) {
+
+                                // special checks to stop some false positives on some of the short names, see if there are letters before or after mo/matt
+                                if(beer.arrayNames[j].toLowerCase() == "matt" || beer.arrayNames[j].toLowerCase() == "mo") {
+                                    if ((response.htmlContent.toLowerCase().charCodeAt(indexFound - 1) > 96) && (response.htmlContent.toLowerCase().charCodeAt(indexFound - 1) < 123) ||
+                                        (response.htmlContent.toLowerCase().charCodeAt(indexFound + beer.arrayNames[j].length) > 96) && 
+                                        (response.htmlContent.toLowerCase().charCodeAt(indexFound + beer.arrayNames[j].length) < 123) ) {
+                                            // It's not actually matt or mo, has a letter on either side of it
+                                        return findBeerInnerFunction(beer, i, j, indexFound + 2);
+                                    }
+                                }
+
+                                // code executed if it is found.  Create a beer link and add it to our list.
+                                var bl = document.getElementById('beerList');
+                                var beertext = document.createTextNode("(" + (i + 1) + ") " + beer.arrayNames[j]);
+                                var link = document.createElement('li');
+                                var entry = document.createElement('a');
+                                entry.appendChild(beertext);
+                                entry.setAttribute("href", beer.baLink);
+                                link.appendChild(entry);
+                                bl.appendChild(link);
+                                return true;
+                            }
+                        }
+
+                        // takes in a beer, checks if it is found, adds it to the table
+                        function findBeer(beer, i) {
+                            for (var j = 0; j < beer.arrayNames.length; j++) {
+                                var found = findBeerInnerFunction(beer, i, j, 0);
+                                if (found) {
+                                    return;
+                                }
+                            }
+                        }
+
+                        // Go through the list and call the above function to check if it is in the webpage
+                        for (var i = 0; i < top.length; i++) {
+                            findBeer(top[i], i);
+                        }
+
+                        /***
+                        * Code to make our links works
+                        */
+
+                        // get all links
+                        var hrefs = document.getElementsByTagName("a");
+
+                        // function to call when clicked
+                        function openLink() {
+                            var href = this.href;
+                            chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                                chrome.tabs.create({ url: href });
+                            });
+                        }
+
+                        // add the function to all of our links
+                        for (var i=0,a; a=hrefs[i]; ++i) {
+                            hrefs[i].addEventListener('click', openLink);
+                        }
+
+                        var text = document.getElementById('someText');
+                        text.innerHTML  = "Top 250 beers found within this tab: "
+                    }
                 }
-
-                // add the function to all of our links
-                for (var i=0,a; a=hrefs[i]; ++i) {
-                    hrefs[i].addEventListener('click', openLink);
-                }
+                xhr.send();
+                var text = document.getElementById('someText');
+                text.innerHTML  = "Currently searching this tab for top 250 beers."
 			}
 		});
 	}

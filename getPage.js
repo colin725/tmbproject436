@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.method && (request.method === "getPage")) {
 
         // Send back the content of the <html> element
-        var html = document.all[0];
-        sendResponse({ "htmlContent": html.innerHTML });
+        var html = document.body;
+        sendResponse({ "htmlContent": html.textContent });
     }
 });
