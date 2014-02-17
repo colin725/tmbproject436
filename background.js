@@ -131,10 +131,12 @@ function clickContextMenu(info) {
                                 });
 
                                 chrome.notifications.onClicked.addListener(function(notificationId) {
-                                    // Todo, move this out of this section of code, make it look up if there is a BA link for that notifID
-                                    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-                                        chrome.tabs.create({ url: balink });
-                                    });
+                                    // TODO: Possibly move this code out of here?  It will work fine here though.
+                                    if (cmid === notificationId) {
+                                        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+                                                chrome.tabs.create({ url: balink });
+                                        });
+                                    }
                                 });
                             }
                         }
